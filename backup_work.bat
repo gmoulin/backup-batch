@@ -55,16 +55,19 @@ move /Y %LMSDIR%"%d%_%t%_site_lms.7z" %USBDIR%lms_backup\
 ::EMPTY FOLDER
 attrib -S -R -H %DROPBOXDIR%lms\* /S
 rmdir %DROPBOXDIR%lms /S /Q
+cd %DROPBOXDIR:~0,2%
 cd %DROPBOXDIR%
 mkdir lms
 
 attrib -S -R -H %SUGARSYNCDIR%lms\* /S
 rmdir %SUGARSYNCDIR%lms /S /Q
+cd %SUGARSYNCDIR:~0,2%
 cd %SUGARSYNCDIR%
 mkdir lms
 
 attrib -S -R -H %USBDIR%lms\* /S
 rmdir %USBDIR%lms /S /Q
+cd %USBDIR:~0,2%
 cd %USBDIR%
 mkdir lms
 
