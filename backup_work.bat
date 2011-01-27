@@ -20,6 +20,7 @@ SET t=%TIME:~0,2%%TIME:~3,2%%DATE:~6,2%
 %DUMPEXE% --opt -u%MYSQLUSER% --quote-names --extended-insert --quick --databases %DBNAME% > %TOOLDIR%%DBNAME%.sql
 
 ::CD
+%TOOLDIR:~0,2%
 cd %TOOLDIR%
 
 ::COMPRESS DUMP
@@ -37,6 +38,7 @@ move /Y %TOOLDIR%"%d%_%t%_database_%DBNAME%.7z" %USBDIR%lms_backup\
 del %LMSDIR%covers\* /F /S /Q
 
 ::CD
+%LMSDIR:~0,2%
 cd %LMSDIR%
 
 ::COMMIT DUMP AND TOOL
@@ -55,19 +57,19 @@ move /Y %LMSDIR%"%d%_%t%_site_lms.7z" %USBDIR%lms_backup\
 ::EMPTY FOLDER
 attrib -S -R -H %DROPBOXDIR%lms\* /S
 rmdir %DROPBOXDIR%lms /S /Q
-cd %DROPBOXDIR:~0,2%
+%DROPBOXDIR:~1,2%
 cd %DROPBOXDIR%
 mkdir lms
 
 attrib -S -R -H %SUGARSYNCDIR%lms\* /S
 rmdir %SUGARSYNCDIR%lms /S /Q
-cd %SUGARSYNCDIR:~0,2%
+%SUGARSYNCDIR:~1,2%
 cd %SUGARSYNCDIR%
 mkdir lms
 
 attrib -S -R -H %USBDIR%lms\* /S
 rmdir %USBDIR%lms /S /Q
-cd %USBDIR:~0,2%
+%USBDIR:~0,2%
 cd %USBDIR%
 mkdir lms
 
@@ -77,6 +79,7 @@ xcopy %LMSDIR%* %SUGARSYNCDIR%lms\ /Y /R /E /H /Q
 xcopy %LMSDIR%* %USBDIR%lms\ /Y /R /E /H /Q
 
 ::CD
+%TOOLDIR:~0,2%
 cd %TOOLDIR%
 
 ::COMMIT DUMP AND TOOL
