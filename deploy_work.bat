@@ -16,7 +16,7 @@ SET SITEFOLDER=lms
 SET DROPBOXDIR="D:\dropbox\My Dropbox\"
 SET SUGARSYNCDIR="D:\sugarsync\"
 SET USBDIR=F:\
-SET BACKUPDIR=%USBDIR%lms_backup\
+SET BACKUPDIR=%DROPBOXDIR%lms_backup\
 
 ::FIND LAST BACKUP FOR DATABASE DUMP
 for /f "tokens=*" %%a in ('dir %BACKUPDIR%*_database_%DBNAME%.7z /b /a-d /o:n') do (SET lfile=%%a)
