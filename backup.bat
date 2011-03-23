@@ -9,6 +9,7 @@ SET SITEDIR=
 
 ::SETTINGS
 if %1==HOME (
+
 	SET MYSQLUSER=root
 	::SET MYSQLPASSWORD=
 	SET ZIPEXE="C:\Program Files\7-Zip\7z.exe"
@@ -38,95 +39,97 @@ if (%SITEDIR%)==() goto fin2
 SET d=%DATE:~6,4%%DATE:~0,2%%DATE:~3,2%
 SET t=%TIME:~0,2%%TIME:~3,2%%DATE:~6,2%
 
-for %%i in %DBNAMES% do goto :task
-
-:task
 	::DUMP THE DATABASES
 	::-p%MYSQLPASSWORD%
-	%DUMPEXE% --opt -u%MYSQLUSER% --quote-names --extended-insert --quick --databases %%i > %TOOLDIR%%%i.sql
+	#for %%i in %DBNAMES% do %DUMPEXE% --opt -u%MYSQLUSER% --quote-names --extended-insert --quick --databases %%i > %TOOLDIR%%%i.sql
 
 	::CD
-	%TOOLDIR:~0,2%
-	cd %TOOLDIR%
+	#%TOOLDIR:~0,2%
+	#cd %TOOLDIR%
 
 	::COMPRESS DUMP
-	%ZIPEXE% a -t7z "%d%_%t%_database_%%i.7z" "%%i.sql" -mx9 -mmt=on -m0=PPMd
+	#for %%i in %DBNAMES% do %ZIPEXE% a -t7z "%d%_%t%_database_%%i.7z" "%%i.sql" -mx9 -mmt=on -m0=PPMd
 
 	::MOVE DUMP (reduce upload time for online storage)
-	move /Y %TOOLDIR%"%%i.sql" %USBDIR%%%i_backup\
+	#for %%i in %DBNAMES% do move /Y %TOOLDIR%"%%i.sql" %USBDIR%%%i_backup\
 
 	::BACKUP COMPRESSED DUMP
-	copy /V /Y %TOOLDIR%"%d%_%t%_database_%%i.7z" %DROPBOXDIR%%%i_backup\
-	copy /V /Y %TOOLDIR%"%d%_%t%_database_%%i.7z" %SUGARSYNCDIR%%%i_backup\
-	move /Y %TOOLDIR%"%d%_%t%_database_%%i.7z" %USBDIR%&&i_backup\
+	#for %%i in %DBNAMES% do copy /V /Y %TOOLDIR%"%d%_%t%_database_%%i.7z" %DROPBOXDIR%%%i_backup\
+	#for %%i in %DBNAMES% do copy /V /Y %TOOLDIR%"%d%_%t%_database_%%i.7z" %SUGARSYNCDIR%%%i_backup\
+	#for %%i in %DBNAMES% do move /Y %TOOLDIR%"%d%_%t%_database_%%i.7z" %USBDIR%%%i_backup\
 
-	::EMPTY COVER FOLDER
-	del %SITEDIR%%%i\covers\* /F /S /Q
+	::EMPTY COVER FOLDER (not needed for suivfin)
+	#for %%i in %DBNAMES% do del %SITEDIR%%%i\covers\* /F /S /Q
 
 	::CD
 	%SITEDIR:~0,2%
-	cd %SITEDIR%%%i\
 
 	::COMMIT DUMP AND TOOL
-	CMD /C git add *
-	CMD /C git commit -a -m "%%i sources backup"
-	CMD /C git gc
+	for %%i in %DBNAMES% do(cd %SITEDIR%%%i\ & CMD /C git add * & CMD /C git commit -a -m "%%i sources backup" & CMD /C git gc)
 
+pause
 	::COMPRESS SITE SOURCES
-	%ZIPEXE% a -t7z "%d%_%t%_site_%%i.7z" %SITEDIR%%%i\* -mx9 -mmt=on -m0=PPMd
+	for %%i in %DBNAMES% do %ZIPEXE% a -t7z "%d%_%t%_site_%%i.7z" %SITEDIR%%%i\* -mx9 -mmt=on -m0=PPMd
 
+pause
 	::BACKUP COMPRESSED SOURCES
-	copy /V /Y %SITEDIR%%%i\"%d%_%t%_site_%%i.7z" %DROPBOXDIR%%%i_backup\
-	copy /V /Y %SITEDIR%%%i\"%d%_%t%_site_%%i.7z" %SUGARSYNCDIR%%%i_backup\
-	move /Y %SITEDIR%%%i\"%d%_%t%_site_%%i.7z" %USBDIR%%%i_backup\
+	for %%i in %DBNAMES% do copy /V /Y %SITEDIR%%%i\"%d%_%t%_site_%%i.7z" %DROPBOXDIR%%%i_backup\
+	for %%i in %DBNAMES% do copy /V /Y %SITEDIR%%%i\"%d%_%t%_site_%%i.7z" %SUGARSYNCDIR%%%i_backup\
+	for %%i in %DBNAMES% do move /Y %SITEDIR%%%i\"%d%_%t%_site_%%i.7z" %USBDIR%%%i_backup\
 
+pause
 	::EMPTY FOLDER
-	attrib -S -R -H %DROPBOXDIR%%%i\* /S
-	rmdir %DROPBOXDIR%%%i /S /Q
+	for %%i in %DBNAMES% do attrib -S -R -H %DROPBOXDIR%%%i\* /S
+	for %%i in %DBNAMES% do rmdir %DROPBOXDIR%%%i /S /Q
 	%DROPBOXDIR:~1,2%
 	cd %DROPBOXDIR%
-	mkdir %%i
+	for %%i in %DBNAMES% do mkdir %%i
 
-	attrib -S -R -H %SUGARSYNCDIR%%%i\* /S
-	rmdir %SUGARSYNCDIR%%%i /S /Q
+pause
+	for %%i in %DBNAMES% do attrib -S -R -H %SUGARSYNCDIR%%%i\* /S
+	for %%i in %DBNAMES% do rmdir %SUGARSYNCDIR%%%i /S /Q
 	%SUGARSYNCDIR:~1,2%
 	cd %SUGARSYNCDIR%
-	mkdir %%i
+	for %%i in %DBNAMES% do mkdir %%i
 
-	attrib -S -R -H %USBDIR%%%i\* /S
-	rmdir %USBDIR%%%i /S /Q
+pause
+	for %%i in %DBNAMES% do attrib -S -R -H %USBDIR%%%i\* /S
+	for %%i in %DBNAMES% do rmdir %USBDIR%%%i /S /Q
 	%USBDIR:~0,2%
 	cd %USBDIR%
-	mkdir %%i
+	for %%i in %DBNAMES% do mkdir %%i
 
+pause
 	::BACKUP SOURCE
-	xcopy %SITEDIR%%%i\* %DROPBOXDIR%%%i\ /Y /R /E /H /Q
-	xcopy %SITEDIR%%%i\* %SUGARSYNCDIR%%%i\ /Y /R /E /H /Q
-	xcopy %SITEDIR%%%i\* %USBDIR%%%i\ /Y /R /E /H /Q
+	for %%i in %DBNAMES% do xcopy %SITEDIR%%%i\* %DROPBOXDIR%%%i\ /Y /R /E /H /Q
+	for %%i in %DBNAMES% do xcopy %SITEDIR%%%i\* %SUGARSYNCDIR%%%i\ /Y /R /E /H /Q
+	for %%i in %DBNAMES% do xcopy %SITEDIR%%%i\* %USBDIR%%%i\ /Y /R /E /H /Q
 
+pause
 	::CD
 	%TOOLDIR:~0,2%
 	cd %TOOLDIR%
 
+pause
 	::COMMIT DUMP AND TOOL
-	CMD /C git add *
-	CMD /C git commit -a -m "backup tools for %%i save"
-	CMD /C git gc
+	for %%i in %DBNAMES% do(CMD /C git add * & CMD /C git commit -a -m "backup tools for %%i save" & CMD /C git gc)
 
+pause
 	::EMPTY FOLDER
-	attrib -S -R -H %DROPBOXDIR%backup_tool\* /S
-	del %DROPBOXDIR%backup_tool\* /F /S /Q
+	for %%i in %DBNAMES% do attrib -S -R -H %DROPBOXDIR%backup_tool\* /S
+	for %%i in %DBNAMES% do del %DROPBOXDIR%backup_tool\* /F /S /Q
 
-	attrib -S -R -H %SUGARSYNCDIR%backup_tool\* /S
-	del %SUGARSYNCDIR%backup_tool\* /F /S /Q
+	for %%i in %DBNAMES% do attrib -S -R -H %SUGARSYNCDIR%backup_tool\* /S
+	for %%i in %DBNAMES% do del %SUGARSYNCDIR%backup_tool\* /F /S /Q
 
-	attrib -S -R -H %USBDIR%backup_tool\* /S
-	del %USBDIR%backup_tool\* /F /S /Q
+	for %%i in %DBNAMES% do attrib -S -R -H %USBDIR%backup_tool\* /S
+	for %%i in %DBNAMES% do del %USBDIR%backup_tool\* /F /S /Q
 
+pause
 	::BACKUP DUMP TOOL
-	xcopy %TOOLDIR%* %DROPBOXDIR%backup_tool\ /Y /R /E /H /Q
-	xcopy %TOOLDIR%* %SUGARSYNCDIR%backup_tool\ /Y /R /E /H /Q
-	xcopy %TOOLDIR%* %USBDIR%backup_tool\ /Y /R /E /H /Q
+	for %%i in %DBNAMES% do xcopy %TOOLDIR%* %DROPBOXDIR%backup_tool\ /Y /R /E /H /Q
+	for %%i in %DBNAMES% do xcopy %TOOLDIR%* %SUGARSYNCDIR%backup_tool\ /Y /R /E /H /Q
+	for %%i in %DBNAMES% do xcopy %TOOLDIR%* %USBDIR%backup_tool\ /Y /R /E /H /Q
 
 	goto end
 
@@ -139,3 +142,4 @@ for %%i in %DBNAMES% do goto :task
 	pause
 
 :end
+	pause
