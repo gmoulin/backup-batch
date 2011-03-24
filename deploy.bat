@@ -67,6 +67,7 @@ copy /y %BACKUPDIR%%lfile% %TOOLDIR%site.7z
 
 ::EMPTY SITE FOLDER
 rmdir %SITEDIR%%TARGET%\ /S /Q
+%SITEDIR:~0,2%
 cd %SITEDIR%
 mkdir %TARGET%
 
@@ -75,6 +76,11 @@ mkdir %TARGET%
 	
 ::DELETE SITE BACKUP
 del %TOOLDIR%site.7z /S /Q > nul 2> nul
+
+::RUN ANT BUILD
+%SITEDIR:~0,2%
+cd %SITEDIR%%TARGET%\build\
+CMD /C ant minify
 
 goto end
 

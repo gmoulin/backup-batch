@@ -62,9 +62,6 @@ copy /V /Y %TOOLDIR%"%d%_%t%_database_%TARGET%.7z" %DROPBOXDIR%%TARGET%_backup\
 copy /V /Y %TOOLDIR%"%d%_%t%_database_%TARGET%.7z" %SUGARSYNCDIR%%TARGET%_backup\
 move /Y %TOOLDIR%"%d%_%t%_database_%TARGET%.7z" %USBDIR%%TARGET%_backup\
 
-::EMPTY PUBLISH FOLDER
-del %SITEDIR%%TARGET%\publish\* /F /S /Q
-
 ::EMPTY COVER FOLDER (not needed for suivfin)
 if %TARGET%==lms ( del %SITEDIR%%TARGET%\covers\* /F /S /Q )
 
@@ -78,7 +75,7 @@ CMD /C git commit -a -m "%TARGET% sources backup"
 CMD /C git gc
 
 ::COMPRESS SITE SOURCES
-%ZIPEXE% a -t7z "%d%_%t%_site_%TARGET%.7z" %SITEDIR%%TARGET%\* -mx9 -mmt=on -m0=PPMd
+%ZIPEXE% a -t7z "%d%_%t%_site_%TARGET%.7z" %SITEDIR%%TARGET%\* -mx9 -mmt=on -m0=PPMd -x!publish
 
 ::BACKUP COMPRESSED SOURCES
 copy /V /Y %SITEDIR%%TARGET%\"%d%_%t%_site_%TARGET%.7z" %DROPBOXDIR%%TARGET%_backup\
