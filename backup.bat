@@ -110,13 +110,11 @@ xcopy %SITEDIR%%TARGET%\* %USBDIR%%TARGET%\ /Y /R /E /H /Q
 %TOOLDIR:~0,2%
 cd %TOOLDIR%
 
-pause
 ::COMMIT DUMP AND TOOL
 CMD /C git add *
 CMD /C git commit -a -m "backup tools save"
 CMD /C git gc
 
-pause
 ::EMPTY FOLDER
 attrib -S -R -H %DROPBOXDIR%backup_tool\* /S
 del %DROPBOXDIR%backup_tool\* /F /S /Q
@@ -127,7 +125,6 @@ del %SUGARSYNCDIR%backup_tool\* /F /S /Q
 attrib -S -R -H %USBDIR%backup_tool\* /S
 del %USBDIR%backup_tool\* /F /S /Q
 
-pause
 ::BACKUP DUMP TOOL
 xcopy %TOOLDIR%* %DROPBOXDIR%backup_tool\ /Y /R /E /H /Q
 xcopy %TOOLDIR%* %SUGARSYNCDIR%backup_tool\ /Y /R /E /H /Q
