@@ -29,3 +29,7 @@ dwsync.xml
 .hg
 .svn
 .idea
+
+# dumps compressed data
+*.7z
+*.sql
