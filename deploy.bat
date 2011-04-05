@@ -77,10 +77,15 @@ mkdir %TARGET%
 ::DELETE SITE BACKUP
 del %TOOLDIR%site.7z /S /Q > nul 2> nul
 
+::EMPTY STASH
+%SITEDIR:~0,2%
+cd %SITEDIR%%TARGET%\
+rmdir %SITEDIR%%TARGET%\stash /S /Q
+
 ::RUN ANT BUILD
 %SITEDIR:~0,2%
 cd %SITEDIR%%TARGET%\build\
-CMD /C ant minify
+CMD /C ant text
 
 goto end
 
