@@ -75,7 +75,7 @@ CMD /C git commit -a -m "%TARGET% sources backup"
 CMD /C git gc
 
 ::COMPRESS SITE SOURCES
-%ZIPEXE% a -t7z "%d%_%t%_site_%TARGET%.7z" %SITEDIR%%TARGET%\* -mx9 -mmt=on -m0=PPMd -x!publish
+%ZIPEXE% a -t7z "%d%_%t%_site_%TARGET%.7z" %SITEDIR%%TARGET%\* -mx9 -mmt=on -m0=PPMd -x!publish -x!stash
 
 ::BACKUP COMPRESSED SOURCES
 copy /V /Y %SITEDIR%%TARGET%\"%d%_%t%_site_%TARGET%.7z" %DROPBOXDIR%%TARGET%_backup\
