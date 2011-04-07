@@ -49,6 +49,7 @@ SET t=%TIME:~0,2%%TIME:~3,2%%DATE:~6,2%
 
 ::CD
 %TOOLDIR:~0,2%
+pause
 cd %TOOLDIR%
 
 ::COMPRESS DUMP
@@ -67,6 +68,7 @@ if %TARGET%==lms ( del %SITEDIR%%TARGET%\covers\* /F /S /Q )
 
 ::CD
 %SITEDIR:~0,2%
+pause
 cd %SITEDIR%%TARGET%\
 
 ::COMMIT DUMP AND TOOL
@@ -86,18 +88,21 @@ move /Y %SITEDIR%%TARGET%\"%d%_%t%_site_%TARGET%.7z" %USBDIR%%TARGET%_backup\
 attrib -S -R -H %DROPBOXDIR%%TARGET%\* /S
 rmdir %DROPBOXDIR%%TARGET% /S /Q
 %DROPBOXDIR:~1,2%
+pause
 cd %DROPBOXDIR%
 mkdir %TARGET%
 
 attrib -S -R -H %SUGARSYNCDIR%%TARGET%\* /S
 rmdir %SUGARSYNCDIR%%TARGET% /S /Q
 %SUGARSYNCDIR:~1,2%
+pause
 cd %SUGARSYNCDIR%
 mkdir %TARGET%
 
 attrib -S -R -H %USBDIR%%TARGET%\* /S
 rmdir %USBDIR%%TARGET% /S /Q
 %USBDIR:~0,2%
+pause
 cd %USBDIR%
 mkdir %TARGET%
 
@@ -108,6 +113,7 @@ xcopy %SITEDIR%%TARGET%\* %USBDIR%%TARGET%\ /Y /R /E /H /Q
 
 ::CD
 %TOOLDIR:~0,2%
+pause
 cd %TOOLDIR%
 
 ::COMMIT DUMP AND TOOL
