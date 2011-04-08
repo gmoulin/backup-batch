@@ -1,1 +1,1 @@
-call \.deploy.bat HOME lms
+call .\deploy.bat HOME lms

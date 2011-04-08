@@ -16,12 +16,13 @@ if %1==HOME (
 	::SET MYSQLPASSWORD=
 	SET ZIPEXE="C:\Program Files\7-Zip\7z.exe"
 	SET TOOLDIR=E:\wamp\backup_tool\
-	SET DBEXE="E:\wamp\bin\mysql\mysql5.1.41\bin\mysql.exe"
+	SET DBEXE="E:\wamp\bin\mysql\mysql5.5.8\bin\mysql.exe"
 
 	SET SITEDIR=E:\wamp\www\
 
 	SET DROPBOXDIR="G:\My Dropbox\"
 	SET SUGARSYNCDIR="H:\sugarsync\"
+	SET USBDIR=I:\
 
 ) else (
 
@@ -38,7 +39,7 @@ if %1==HOME (
 	SET USBDIR=F:\
 )
 
-SET BACKUPDIR=%DROPBOXDIR%%TARGET%_backup\
+SET BACKUPDIR=%USBDIR%%TARGET%_backup\
 
 
 if (%SITEDIR%)==() goto fin2
@@ -98,3 +99,4 @@ goto end
 	pause
 
 :end
+pause
