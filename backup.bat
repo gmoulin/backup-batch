@@ -1,4 +1,4 @@
-::SITES DATABASE DUMP + COMPRESS + GIT + BACKUP ON DROPBOX / SUGARSYNC / USB
+::SITES DATABASE DUMP + COMPRESS + BACKUP ON DROPBOX / SUGARSYNC / USB
 cls
 
 ::LOCATION PARAMETER
@@ -69,11 +69,6 @@ if %TARGET%==lms ( del %SITEDIR%%TARGET%\covers\* /F /S /Q )
 %SITEDIR:~0,2%
 cd %SITEDIR%%TARGET%\
 
-::COMMIT DUMP AND TOOL
-CMD /C git add * 
-CMD /C git commit -a -m "%TARGET% sources backup"
-CMD /C git gc
-
 ::COMPRESS SITE SOURCES
 %ZIPEXE% a -t7z "%d%_%t%_site_%TARGET%.7z" %SITEDIR%%TARGET%\* -mx9 -mmt=on -m0=PPMd -x!publish -x!stash
 
@@ -109,11 +104,6 @@ xcopy %SITEDIR%%TARGET%\* %USBDIR%%TARGET%\ /Y /R /E /H /Q
 ::CD
 %TOOLDIR:~0,2%
 cd %TOOLDIR%
-
-::COMMIT DUMP AND TOOL
-CMD /C git add *
-CMD /C git commit -a -m "backup tools save"
-CMD /C git gc
 
 ::EMPTY FOLDER
 attrib -S -R -H %DROPBOXDIR%backup_tool\* /S
