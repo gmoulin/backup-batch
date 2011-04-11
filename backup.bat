@@ -77,30 +77,6 @@ copy /V /Y %SITEDIR%%TARGET%\"%d%_%t%_site_%TARGET%.7z" %DROPBOXDIR%%TARGET%_bac
 copy /V /Y %SITEDIR%%TARGET%\"%d%_%t%_site_%TARGET%.7z" %SUGARSYNCDIR%%TARGET%_backup\
 move /Y %SITEDIR%%TARGET%\"%d%_%t%_site_%TARGET%.7z" %USBDIR%%TARGET%_backup\
 
-::EMPTY FOLDER
-attrib -S -R -H %DROPBOXDIR%%TARGET%\* /S
-rmdir %DROPBOXDIR%%TARGET% /S /Q
-%DROPBOXDIR:~1,2%
-cd %DROPBOXDIR%
-mkdir %TARGET%
-
-attrib -S -R -H %SUGARSYNCDIR%%TARGET%\* /S
-rmdir %SUGARSYNCDIR%%TARGET% /S /Q
-%SUGARSYNCDIR:~1,2%
-cd %SUGARSYNCDIR%
-mkdir %TARGET%
-
-attrib -S -R -H %USBDIR%%TARGET%\* /S
-rmdir %USBDIR%%TARGET% /S /Q
-%USBDIR:~0,2%
-cd %USBDIR%
-mkdir %TARGET%
-
-::BACKUP SOURCE
-xcopy %SITEDIR%%TARGET%\* %DROPBOXDIR%%TARGET%\ /Y /R /E /H /Q
-xcopy %SITEDIR%%TARGET%\* %SUGARSYNCDIR%%TARGET%\ /Y /R /E /H /Q
-xcopy %SITEDIR%%TARGET%\* %USBDIR%%TARGET%\ /Y /R /E /H /Q
-
 ::CD
 %TOOLDIR:~0,2%
 cd %TOOLDIR%
