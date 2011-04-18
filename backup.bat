@@ -19,7 +19,7 @@ if %1==HOME (
 	SET DUMPEXE="E:\wamp\bin\mysql\mysql5.5.8\bin\mysqldump.exe"
 	SET TOOLDIR=E:\wamp\backup_tool\
 	SET SITEDIR=E:\wamp\www\
-	SET USBDIR=J:\
+	SET USBDIR=I:\
 	SET DROPBOXDIR="G:\My Dropbox\"
 	SET SUGARSYNCDIR="H:\sugarsync\"
 
