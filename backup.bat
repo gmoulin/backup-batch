@@ -40,7 +40,7 @@ if (%SITEDIR%)==() goto fin2
 if (%TARGET%)==() goto fin2
 
 
-SET d=%DATE:~6,4%%DATE:~0,2%%DATE:~3,2%
+SET d=%DATE:~6,4%%DATE:~3,2%%DATE:~0,2%
 SET t=%TIME:~0,2%%TIME:~3,2%%DATE:~6,2%
 
 ::DUMP THE DATABASES
