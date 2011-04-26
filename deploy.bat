@@ -47,8 +47,8 @@ if (%TARGET%)==() goto fin2
 if not exist %BACKUPDIR% goto fin2
 
 ::FIND LAST BACKUP FOR DATABASE DUMP
-for /f "tokens=*" %%a in ('dir %BACKUPDIR%*_database_%TARGET%.7z /b /a-d /o:n') do (SET lfile=%%a)
-copy /y %BACKUPDIR%%lfile% %TOOLDIR%database.7z
+for /f "tokens=*" %%a in ('dir %BACKUPDIR%*_database_%TARGET%.7z /B /A:-D /O:D') do (SET lfile=%%a)
+copy /y "%BACKUPDIR%%lfile%" %TOOLDIR%database.7z
 
 ::DECOMPRESS DUMP
 %ZIPEXE% x %TOOLDIR%database.7z -o%TOOLDIR% -y > nul 2> nul
@@ -63,10 +63,11 @@ del %TOOLDIR%database.7z /S /Q
 
 
 ::FIND LAST BACKUP FOR SITE DUMP
-for /f "tokens=*" %%a in ('dir %BACKUPDIR%*_site_%TARGET%.7z /b /a-d /o:n') do (SET lfile=%%a)
-copy /y %BACKUPDIR%%lfile% %TOOLDIR%site.7z
+for /f "tokens=*" %%a in ('dir %BACKUPDIR%*_site_%TARGET%.7z /B /A:-D /O:D') do (SET lfile=%%a)
+copy /y "%BACKUPDIR%%lfile%" %TOOLDIR%site.7z
 
 ::EMPTY SITE FOLDER
+rmdir %SITEDIR%%TARGET%\ /S /Q
 rmdir %SITEDIR%%TARGET%\ /S /Q
 %SITEDIR:~0,2%
 cd %SITEDIR%
