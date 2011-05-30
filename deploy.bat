@@ -21,7 +21,6 @@ if %1==HOME (
 	SET SITEDIR=E:\wamp\www\
 
 	SET DROPBOXDIR="G:\My Dropbox\"
-	SET SUGARSYNCDIR="H:\sugarsync\"
 	SET USBDIR=I:\
 
 ) else (
@@ -35,7 +34,6 @@ if %1==HOME (
 	SET SITEDIR=D:\amp\www\
 
 	SET DROPBOXDIR="D:\dropbox\My Dropbox\"
-	SET SUGARSYNCDIR="D:\sugarsync\"
 	SET USBDIR=F:\
 )
 
