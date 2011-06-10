@@ -21,7 +21,7 @@ if %1==HOME (
 	SET SITEDIR=E:\wamp\www\
 	SET USBDIR=I:\
 	SET DROPBOXDIR="G:\My Dropbox\"
-	SET TMPDIR=E:\wamp\upload_tmp\
+	SET UPTMPDIR=E:\wamp\upload_tmp\
 
 ) else (
 
@@ -52,22 +52,22 @@ mkdir %UPTMPDIR%
 
 ::DUMP THE DATABASES
 ::-p%MYSQLPASSWORD%
-%DUMPEXE% --opt -u%MYSQLUSER% --quote-names --extended-insert --quick --databases %TARGET% > %TOOLDIR%%TARGET%.sql
+::%DUMPEXE% --opt -u%MYSQLUSER% --quote-names --extended-insert --quick --databases %TARGET% > %TOOLDIR%%TARGET%.sql
 
 ::CD
-%TOOLDIR:~0,2%
-cd %TOOLDIR%
+::%TOOLDIR:~0,2%
+::cd %TOOLDIR%
 
 ::COMPRESS DUMP
-%ZIPEXE% a -t7z "%d%_%t%_database_%TARGET%.7z" "%TARGET%.sql" -mx9 -mmt=on -m0=PPMd
+::%ZIPEXE% a -t7z "%d%_%t%_database_%TARGET%.7z" "%TARGET%.sql" -mx9 -mmt=on -m0=PPMd
 
 ::MOVE DUMP (reduce upload time for online storage)
-move /Y %TOOLDIR%"%TARGET%.sql" %USBDIR%%TARGET%_backup\
+::move /Y %TOOLDIR%"%TARGET%.sql" %USBDIR%%TARGET%_backup\
 
 ::BACKUP COMPRESSED DUMP
-copy /V /Y %TOOLDIR%"%d%_%t%_database_%TARGET%.7z" %DROPBOXDIR%%TARGET%_backup\
-copy /V /Y %TOOLDIR%"%d%_%t%_database_%TARGET%.7z" %UPTMPDIR%
-move /Y %TOOLDIR%"%d%_%t%_database_%TARGET%.7z" %USBDIR%%TARGET%_backup\
+::copy /V /Y %TOOLDIR%"%d%_%t%_database_%TARGET%.7z" %DROPBOXDIR%%TARGET%_backup\
+::copy /V /Y %TOOLDIR%"%d%_%t%_database_%TARGET%.7z" %UPTMPDIR%
+::move /Y %TOOLDIR%"%d%_%t%_database_%TARGET%.7z" %USBDIR%%TARGET%_backup\
 
 ::EMPTY COVER FOLDER (not needed for suivfin)
 if %TARGET%==lms ( del %SITEDIR%%TARGET%\covers\* /F /S /Q )
