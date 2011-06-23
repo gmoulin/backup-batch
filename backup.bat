@@ -100,11 +100,14 @@ xcopy %TOOLDIR%* %DROPBOXDIR%backup_tool\ /Y /R /E /H /Q
 xcopy %TOOLDIR%* %USBDIR%backup_tool\ /Y /R /E /H /Q
 
 
+::CD
+%UPTMPDIR:~0,2%
+cd %UPTMPDIR%
+
 @ECHO OFF
 :: Create the temporary script file
 > script.ftp ECHO gmoulin
 >>script.ftp ECHO b4cKup5
->>script.ftp ECHO cd %UPTMPDIR%
 >>script.ftp ECHO put %d%_%t%_site_%TARGET%.7z
 :: mput %d%_%t%_database_%TARGET%.7z %d%_%t%_site_%TARGET%.7z
 >>script.ftp ECHO quit
