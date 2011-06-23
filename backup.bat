@@ -108,6 +108,7 @@ cd %UPTMPDIR%
 :: Create the temporary script file
 > script.ftp ECHO gmoulin
 >>script.ftp ECHO b4cKup5
+>>script.ftp ECHO cd "/My Documents/dev_backup"
 >>script.ftp ECHO put %d%_%t%_site_%TARGET%.7z
 :: mput %d%_%t%_database_%TARGET%.7z %d%_%t%_site_%TARGET%.7z
 >>script.ftp ECHO quit
