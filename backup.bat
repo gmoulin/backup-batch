@@ -102,10 +102,11 @@ xcopy %TOOLDIR%* %USBDIR%backup_tool\ /Y /R /E /H /Q
 
 @ECHO OFF
 :: Create the temporary script file
+	::%d%_%t%_database_%TARGET%.7z 
 > script.ftp ECHO gmoulin
 >>script.ftp ECHO b4cKup5
 >>script.ftp ECHO cd %UPTMPDIR%
->>script.ftp ECHO mput %d%_%t%_database_%TARGET%.7z %d%_%t%_site_%TARGET%.7z
+>>script.ftp ECHO mput %d%_%t%_site_%TARGET%.7z
 >>script.ftp ECHO quit
 :: Use the temporary script for unattended FTP
 FTP -v -i -s:script.ftp ftp.drivehq.com 
