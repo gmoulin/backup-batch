@@ -98,6 +98,7 @@ git gc
 git push https://gmoulin@github.com/gmoulin/backup-batch.git
 
 #FTP
+#http://manpages.ubuntu.com/manpages/natty/man1/ftp-upload.1p.html
 echo "send archive to FTP server (/tmp/upload/${D}_${PROJECT}_site.tar.gz -> ftp.drivehq.com in /My Documents/dev_backup/)"
 ftp-upload -v --user gmoulin --password b4cKup5 --host ftp.drivehq.com --dir "/My Documents/dev_backup/" /tmp/upload/${D}_${PROJECT}_site.tar.gz
 
@@ -105,5 +106,5 @@ ftp-upload -v --user gmoulin --password b4cKup5 --host ftp.drivehq.com --dir "/M
 echo "cleaning upload temp folder"
 rm -rf /tmp/upload/* /tmp/upload/.??*
 
-echo "done"
+echo "backup done"
 exit 0
