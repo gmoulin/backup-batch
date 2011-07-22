@@ -82,6 +82,7 @@ echo "copy backup batches to usb key (${USBDIR}backup_tool/)"
 cp -rf /home/gmoulin/backup-batch/* ${USBDIR}backup_tool/
 
 #GIT
+git config --global http.proxy ''
 echo "Git commit and push project"
 cd /var/www/${PROJECT}/
 git add .
