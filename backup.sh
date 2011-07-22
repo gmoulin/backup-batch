@@ -19,7 +19,7 @@ fi
 
 if [ ${ENV} = 'work' ]; then
 	DROPBOXDIR=/home/gmoulin/Dropbox/
-	USBDIR=/media/3533-6136/
+	USBDIR=/media/PENDRIVE/
 else
 	DROPBOXDIR=""
 	USBDIR=""
@@ -63,7 +63,7 @@ cd /var/www/
 #chech if project folder exists
 if [ -d ${PROJECT} ]; then
 	echo "creating archive (/tmp/upload/${D}_${PROJECT}_site.tar.gz)"
-	tar -zcf /tmp/upload/${D}_${PROJECT}_site.tar.gz ${PROJECT}/ --exclude 'intermediate' --exclude 'publish' --exclude 'stash' --exclude 'smarty/templates_c/*' --exclude 'smarty/cache/*'
+	tar -zcf /tmp/uploacd d/${D}_${PROJECT}_site.tar.gz ${PROJECT}/ --exclude 'intermediate' --exclude 'publish' --exclude 'stash' --exclude 'smarty/templates_c/*' --exclude 'smarty/cache/*'
 else
 	echo "project folder not found (/var/www/${PROJECT})"
 	exit 1
@@ -108,3 +108,4 @@ rm -rf /tmp/upload/* /tmp/upload/.??*
 
 echo "backup done"
 exit 0
+
