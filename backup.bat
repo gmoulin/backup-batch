@@ -19,7 +19,7 @@ if %1==HOME (
 	SET DUMPEXE="E:\wamp\bin\mysql\mysql5.5.8\bin\mysqldump.exe"
 	SET TOOLDIR=E:\wamp\backup_tool\
 	SET SITEDIR=E:\wamp\www\
-	SET USBDIR=I:\
+	SET USBDIR=I:\gmoulin\
 	SET DROPBOXDIR="G:\My Dropbox\"
 	SET UPTMPDIR=E:\wamp\upload_tmp\
 
@@ -31,7 +31,7 @@ if %1==HOME (
 	SET DUMPEXE="D:\amp\MySQL5.1.52\bin\mysqldump.exe"
 	SET TOOLDIR=D:\amp\backup_tool\
 	SET SITEDIR=D:\amp\www\
-	SET USBDIR=F:\
+	SET USBDIR=F:\gmoulin\
 	SET DROPBOXDIR="D:\dropbox\My Dropbox\"
 	SET UPTMPDIR=D:\amp\upload_tmp\
 )

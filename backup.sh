@@ -19,7 +19,7 @@ fi
 
 if [ ${ENV} = 'work' ]; then
 	DROPBOXDIR=/home/gmoulin/Dropbox/
-	USBDIR=/media/PENDRIVE/
+	USBDIR=/media/WARP/gmoulin/
 else
 	DROPBOXDIR=""
 	USBDIR=""
